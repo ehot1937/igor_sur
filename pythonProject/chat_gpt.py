@@ -1,9 +1,10 @@
 from openai import OpenAI
 from dotenv import load_dotenv
+import os
 
 load_dotenv()
 
-client = OpenAI(base_url="https://api.proxyapi.ru/openai/v1")
+client = OpenAI(base_url=os.getenv("PROXY_URL"))
 
 
 def generate_answer(user_massage: str) -> str:
