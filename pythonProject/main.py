@@ -1,27 +1,23 @@
-from openai import OpenAI
-from dotenv import load_dotenv
+import os
+import telebot
+from pythonProject.chat_gpt import generate_answer
 
-load_dotenv()
 
-if __name__ == '__main__':
-    flag = True
-    while flag:
-        massage = input()
-        if massage == "stop":
-            flag = False
-            break
+API_TOKEN = os.getenv("TELEBOT_TOKEN")
+bot = telebot.TeleBot(API_TOKEN)
 
-        client = OpenAI(
-                        base_url="https://api.proxyapi.ru/openai/v1")
 
-        completion = client.chat.completions.create(
-            model="gpt-3.5-turbo",
-            messages=[
-                {"role": "system",
-                 "content": "You are a poetic assistant, skilled in explaining complex programming concepts with creative flair."},
-                {"role": "user", "content": f"{massage}"}
-            ],
-            max_tokens=50
-        )
+@bot.message_handler(commands=["start"])
+def send_welcome(message):
+    bot.reply_to(message, "Ну привет, петушок")
 
-        print(completion.choices[0].message.content)
+
+@bot.message_handler()
+def echo_message(message):
+    response = generate_answer(user_massage=message.text)
+    bot.reply_to(message, response)
+    print(f"Сообщение: [{message.text}] от пользователя {message.from_user.username}")
+
+
+if __name__ == "__main__":
+    bot.polling(none_stop=True)
