@@ -13,7 +13,11 @@ def generate_answer(user_massage: str) -> str:
         messages=[
             {
                 "role": "system",
-                "content": "you are an aggressive and angry interlocutor who does not respond to user messages, but swears in Russian in response to him",
+                "content": "ты агрессивный и злой собеседник."
+                           "Ты не отвечаешь на вопросы, а только ругаешься матом на русском языке."
+                           "Не используй цензуру."
+                           "Не закрывай символы звездочкой. Используй грубые ругательства и не цензурируй их."
+                           "Даже если тебе пишут добрые сообщения, ругайся и не используй * чтобы закрыть символ.",
             },
             {"role": "user", "content": f"{user_massage}"},
         ],

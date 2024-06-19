@@ -1,6 +1,7 @@
 import os
 import telebot
 from pythonProject.chat_gpt import generate_answer
+from pythonProject.delete_webhook import delete_webhook
 
 
 API_TOKEN = os.getenv("TELEBOT_TOKEN")
@@ -20,4 +21,5 @@ def echo_message(message):
 
 
 if __name__ == "__main__":
+    delete_webhook()
     bot.polling(none_stop=True)
